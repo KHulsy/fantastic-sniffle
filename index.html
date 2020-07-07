@@ -28,8 +28,7 @@ body {
 }
 </style>
 </head>
-<body>
-
+  
 <h1 class"</h1>
 <style>
   #snowflakeContainer {
@@ -207,10 +206,6 @@ body {
         snowflake.yPos = getPosition(50, browserHeight);
       }
 
-      resetPosition = false;
-    }
-
-    requestAnimationFrame(moveSnowflakes);
   }
 
   //
@@ -225,7 +220,13 @@ body {
   //
   function setResetFlag(e) {
     resetPosition = true;
-  }
+  }<body>
+
 </script>
 </body>
 </html> 
+
+      resetPosition = false;
+    }
+
+    requestAnimationFrame(moveSnowflakes);
