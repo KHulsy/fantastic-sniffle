@@ -7,227 +7,176 @@ body {
   background-color: black;
   font-family: cursive;
 }
+  <script>
 
-.glow {
-  font-size: 80px;
-  color: #fff;
-  text-align: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate;
+ <script type="text/javascript">
+// <![CDATA[
+var colour="#000000";
+var sparkles=120;
+ 
+/****************************
+*  Tinkerbell Magic Sparkle *
+* (c) 2005 mf2fm web-design *
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+ 
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+ 
+function sparkle() {
+  var c;
+  if (x!=ox || y!=oy) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
+    }
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
 }
-
-@-webkit-keyframes glow {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+ 
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      starx[i]+=(i%5-2)/5;
+      star[i].style.left=starx[i]+"px";
+    }
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
+    }
   }
-  
-  to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
   }
 }
-</style>
-</head>
-  
-<h1 class"</h1>
-<style>
-  #snowflakeContainer {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    display: none;
+ 
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
   }
-
-  .snowflake {
-    position: fixed;
-    background-color: #CCC;
-    user-select: none;
-    z-index: 1000;
-    pointer-events: none;
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-  }
-</style>
-
-<div id="snowflakeContainer">
-  <span class="snowflake"></span>
-</div>
-
-<script>
-  // Array to store our Snowflake objects
-  var snowflakes = [];
-
-  // Global variables to store our browser's window size
-  var browserWidth;
-  var browserHeight;
-
-  // Specify the number of snowflakes you want visible
-  var numberOfSnowflakes = 50;
-
-  // Flag to reset the position of the snowflakes
-  var resetPosition = false;
-
-  // Handle accessibility
-  var enableAnimations = false;
-  var reduceMotionQuery = matchMedia("(prefers-reduced-motion)");
-
-  // Handle animation accessibility preferences 
-  function setAccessibilityState() {
-    if (reduceMotionQuery.matches) {
-      enableAnimations = false;
-    } else { 
-      enableAnimations = true;
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tinyx[i]+=(i%5-2)/5;
+      tiny[i].style.left=tinyx[i]+"px";
+    }
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
     }
   }
-  setAccessibilityState();
-
-  reduceMotionQuery.addListener(setAccessibilityState);
-
-  //
-  // It all starts here...
-  //
-  function setup() {
-    if (enableAnimations) {
-      window.addEventListener("DOMContentLoaded", generateSnowflakes, false);
-      window.addEventListener("resize", setResetFlag, false);
-    }
+  else tiny[i].style.visibility="hidden";
+}
+ 
+document.onmousemove=mouse;
+function mouse(e) {
+  set_scroll();
+  y=(e)?e.pageY:event.y+sdown;
+  x=(e)?e.pageX:event.x+sleft;
+}
+ 
+function set_scroll() {
+  if (typeof(self.pageYOffset)=="number") {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
   }
-  setup();
-
-  //
-  // Constructor for our Snowflake object
-  //
-  function Snowflake(element, speed, xPos, yPos) {
-    // set initial snowflake properties
-    this.element = element;
-    this.speed = speed;
-    this.xPos = xPos;
-    this.yPos = yPos;
-    this.scale = 1;
-
-    // declare variables used for snowflake's motion
-    this.counter = 0;
-    this.sign = Math.random() < 0.5 ? 1 : -1;
-
-    // setting an initial opacity and size for our snowflake
-    this.element.style.opacity = (.1 + Math.random()) / 3;
+  else if (document.body.scrollTop || document.body.scrollLeft) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
   }
-
-  //
-  // The function responsible for actually moving our snowflake
-  //
-  Snowflake.prototype.update = function () {
-    // using some trigonometry to determine our x and y position
-    this.counter += this.speed / 5000;
-    this.xPos += this.sign * this.speed * Math.cos(this.counter) / 40;
-    this.yPos += Math.sin(this.counter) / 40 + this.speed / 30;
-    this.scale = .5 + Math.abs(10 * Math.cos(this.counter) / 20);
-
-    // setting our snowflake's position
-    setTransform(Math.round(this.xPos), Math.round(this.yPos), this.scale, this.element);
-
-    // if snowflake goes below the browser window, move it back to the top
-    if (this.yPos > browserHeight) {
-      this.yPos = -50;
-    }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+        sdown=document.documentElement.scrollTop;
   }
-
-  //
-  // A performant way to set your snowflake's position and size
-  //
-  function setTransform(xPos, yPos, scale, el) {
-    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) scale(${scale}, ${scale})`;
+  else {
+    sdown=0;
+    sleft=0;
   }
-
-  //
-  // The function responsible for creating the snowflake
-  //
-  function generateSnowflakes() {
-
-    // get our snowflake element from the DOM and store it
-    var originalSnowflake = document.querySelector(".snowflake");
-
-    // access our snowflake element's parent container
-    var snowflakeContainer = originalSnowflake.parentNode;
-    snowflakeContainer.style.display = "block";
-
-    // get our browser's size
-    browserWidth = document.documentElement.clientWidth;
-    browserHeight = document.documentElement.clientHeight;
-
-    // create each individual snowflake
-    for (var i = 0; i < numberOfSnowflakes; i++) {
-
-      // clone our original snowflake and add it to snowflakeContainer
-      var snowflakeClone = originalSnowflake.cloneNode(true);
-      snowflakeContainer.appendChild(snowflakeClone);
-
-      // set our snowflake's initial position and related properties
-      var initialXPos = getPosition(50, browserWidth);
-      var initialYPos = getPosition(50, browserHeight);
-      var speed = 5 + Math.random() * 40;
-
-      // create our Snowflake object
-      var snowflakeObject = new Snowflake(snowflakeClone,
-        speed,
-        initialXPos,
-        initialYPos);
-      snowflakes.push(snowflakeObject);
-    }
-
-    // remove the original snowflake because we no longer need it visible
-    snowflakeContainer.removeChild(originalSnowflake);
-
-    moveSnowflakes();
+}
+ 
+window.onresize=set_width;
+function set_width() {
+  if (typeof(self.innerWidth)=="number") {
+    swide=self.innerWidth;
+    shigh=self.innerHeight;
   }
-
-  //
-  // Responsible for moving each snowflake by calling its update function
-  //
-  function moveSnowflakes() {
-
-    if (enableAnimations) {
-      for (var i = 0; i < snowflakes.length; i++) {
-        var snowflake = snowflakes[i];
-        snowflake.update();
-      }      
-    }
-
-    // Reset the position of all the snowflakes to a new value
-    if (resetPosition) {
-      browserWidth = document.documentElement.clientWidth;
-      browserHeight = document.documentElement.clientHeight;
-
-      for (var i = 0; i < snowflakes.length; i++) {
-        var snowflake = snowflakes[i];
-
-        snowflake.xPos = getPosition(50, browserWidth);
-        snowflake.yPos = getPosition(50, browserHeight);
-      }
-
+  else if (document.documentElement && document.documentElement.clientWidth) {
+    swide=document.documentElement.clientWidth;
+    shigh=document.documentElement.clientHeight;
   }
-
-  //
-  // This function returns a number between (maximum - offset) and (maximum + offset)
-  //
-  function getPosition(offset, size) {
-    return Math.round(-1 * offset + Math.random() * (size + 2 * offset));
+  else if (document.body.clientWidth) {
+    swide=document.body.clientWidth;
+    shigh=document.body.clientHeight;
   }
-
-  //
-  // Trigger a reset of all the snowflakes' positions
-  //
-  function setResetFlag(e) {
-    resetPosition = true;
-  }<body>
-
-</script>
-</body>
-</html> 
-
-      resetPosition = false;
-    
-
-    requestAnimationFrame(moveSnowflakes); }
-                                        
+}
+ 
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  div.style.backgroundColor=colour;
+  return (div);
+}
+// ]]>
+</script>                                        
